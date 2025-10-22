@@ -1,6 +1,6 @@
 package com.wesley.lab_week7.data.dto
 
-data class ResponseWeather(
+data class ResponseWeatherData(
     val base: String,
     val clouds: Clouds,
     val cod: Int,
@@ -9,6 +9,7 @@ data class ResponseWeather(
     val id: Int,
     val main: Main,
     val name: String,
+    val rain: Rain,
     val sys: Sys,
     val timezone: Int,
     val visibility: Int,
