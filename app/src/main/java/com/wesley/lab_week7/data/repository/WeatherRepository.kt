@@ -5,9 +5,9 @@ import com.wesley.lab_week7.ui.model.PanPanWeather
 import java.io.IOException
 
 class WeatherRepository (private val service: WeatherService) {
-    suspend fun getWeather(): PanPanWeather{
-        val weather = service.getWeatherByCity(
-            city = "tokyo",
+    suspend fun getWeatherByCity(city:String): PanPanWeather{
+        val weather = service.getWeather(
+            city = city,
             apiKey = "c98f91bafdefa4e1a57e2598501305e0",
             units = "metric"
         ).body()?: throw IOException("Empty response from weather service")
