@@ -1,5 +1,31 @@
 package com.wesley.lab_week7.data.repository
 
-class WeatherRepository {
+import com.wesley.lab_week7.data.service.WeatherService
+import com.wesley.lab_week7.ui.model.PanPanWeather
+import java.io.IOException
 
+class WeatherRepository (private val service: WeatherService) {
+    suspend fun getWeather(): PanPanWeather{
+        val weather = service.getWeatherByCity(
+            city = "tokyo",
+            apiKey = "c98f91bafdefa4e1a57e2598501305e0",
+            units = "metric"
+        ).body()?: throw IOException("Empty response from weather service")
+        return PanPanWeather(
+            city = weather.name,
+            updatedDate = "",
+            updatedTime = "",
+            temperature = weather.main.temp,
+            condition = weather.weather[0].main,
+            icon = weather.weather[0].icon,
+            humidity = weather.main.humidity,
+            wind = weather.wind.speed,
+            feelsLike = weather.main.feels_like,
+            rainFall = weather.rain.`1h`,
+            pressure = weather.main.pressure,
+            clouds = weather.clouds.all,
+            sunrise = "",
+            sunset = ""
+        )
+    }
 }
