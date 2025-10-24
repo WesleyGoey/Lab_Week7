@@ -11,10 +11,10 @@ class WeatherRepository (private val service: WeatherService) {
             apiKey = "c98f91bafdefa4e1a57e2598501305e0",
             units = "metric"
         ).body()?: throw IOException("Empty response from weather service")
+
         return PanPanWeather(
             city = weather.name,
-            updatedDate = "",
-            updatedTime = "",
+            dateTime = weather.dt,
             icon = weather.weather[0].icon,
             condition = weather.weather[0].main,
             temperature = weather.main.temp,
@@ -24,8 +24,8 @@ class WeatherRepository (private val service: WeatherService) {
             rainFall = weather.rain.`1h`,
             pressure = weather.main.pressure,
             clouds = weather.clouds.all,
-            sunrise = "",
-            sunset = "",
+            sunrise = weather.sys.sunrise,
+            sunset = weather.sys.sunset,
             isError = false,
             errorMessage = null
         )

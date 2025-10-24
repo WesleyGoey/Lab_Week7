@@ -12,16 +12,32 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class WeatherViewModel: ViewModel() {
+class WeatherViewModel : ViewModel() {
     private val _weather = MutableStateFlow(PanPanWeather())
     val weather: StateFlow<PanPanWeather?> = _weather.asStateFlow()
 
-    fun loadWeather(cityName: String){
-        viewModelScope.launch{
+    fun loadWeather(cityName: String) {
+        if (cityName.isBlank()) {
             _weather.value = _weather.value.copy(
-                isError = false,
-                errorMessage = null
+                isError = true,
+                errorMessage = "HTTP 404 Not Found"
             )
         }
+
+        viewModelScope.launch {
+            try{
+                val weatherData = WeatherContainer().weatherRepository.getWeatherByCity(cityName)
+                _weather.value = weatherData.copy(
+                    isError = false,
+                    errorMessage = null
+                )
+            } catch (e: Exception){
+                _weather.value = _weather.value.copy(
+                    isError = true,
+                    errorMessage = "HTTP 404 Not Found"
+                )
+            }
+        }
     }
+
 }
