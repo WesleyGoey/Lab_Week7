@@ -14,5 +14,7 @@ data class PanPanWeather(
     val pressure: Int,
     val clouds: Int,
     val sunrise: String,
-    val sunset: String
+    val sunset: String,
+    val isError:Boolean,
+    val errorMessage:String
 )

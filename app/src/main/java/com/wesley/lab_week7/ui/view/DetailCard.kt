@@ -74,6 +74,6 @@ fun DetailCard(
 
 @Preview
 @Composable
-fun DetailCardPreview() {
+private fun DetailCardPreview() {
     DetailCard()
 }

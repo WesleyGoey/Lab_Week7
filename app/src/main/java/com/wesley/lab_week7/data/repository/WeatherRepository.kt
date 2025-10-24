@@ -25,7 +25,9 @@ class WeatherRepository (private val service: WeatherService) {
             pressure = weather.main.pressure,
             clouds = weather.clouds.all,
             sunrise = "",
-            sunset = ""
+            sunset = "",
+            isError = false,
+            errorMessage = ""
         )
     }
 }
