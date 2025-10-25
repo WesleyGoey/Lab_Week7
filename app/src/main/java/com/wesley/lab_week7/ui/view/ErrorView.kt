@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import com.wesley.lab_week7.R
 
 @Composable
-fun HomeView(
+fun ErrorView(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -106,14 +108,21 @@ fun HomeView(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color.White.copy(alpha = 0.7f),
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = "Warning Icon",
+                        tint = Color(0xFFfd0204),
                         modifier = Modifier.size(64.dp)
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Oops! Something went wrong.",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
                     )
                     Spacer(modifier = Modifier.height(14.dp))
                     Text(
-                        text = "Search for a city to get started",
+                        text = "HTTP",
                         color = Color.White.copy(alpha = 0.85f),
                         fontSize = 16.sp
                     )
@@ -125,6 +134,6 @@ fun HomeView(
 
 @Preview
 @Composable
-private fun HomePreview() {
-    HomeView()
+private fun ErrorPreview() {
+    ErrorView()
 }

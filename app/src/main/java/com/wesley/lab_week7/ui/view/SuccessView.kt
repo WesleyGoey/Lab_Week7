@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.wesley.lab_week7.R
 
 @Composable
-fun HomeView(
+fun SuccessView(
     modifier: Modifier = Modifier
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -111,7 +111,7 @@ fun HomeView(
                         tint = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.size(64.dp)
                     )
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = "Search for a city to get started",
                         color = Color.White.copy(alpha = 0.85f),
@@ -125,6 +125,6 @@ fun HomeView(
 
 @Preview
 @Composable
-private fun HomePreview() {
-    HomeView()
+private fun SuccessPreview() {
+    SuccessView()
 }
