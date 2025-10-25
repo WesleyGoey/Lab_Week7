@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -29,6 +30,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,15 +44,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wesley.lab_week7.R
+import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
 
 @Composable
 fun SuccessView(
     modifier: Modifier = Modifier,
     searchCity: String,
     onSearchChange: (String) -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    viewModel: WeatherViewModel = viewModel()
 ) {
+    val allCard by viewModel.allCard.collectAsState()
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.weather___home_2),
@@ -113,8 +121,7 @@ fun SuccessView(
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp),
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top,
                     contentPadding = PaddingValues(vertical = 24.dp)
@@ -159,11 +166,55 @@ fun SuccessView(
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth()
                         )
-                    }
+                        Spacer(modifier = Modifier.height(60.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.icon_wind),
+                                    contentDescription = "weather icon",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(64.dp)
+                                )
+                                Text(
+                                    text = "condition",
+                                    color = Color.White.copy(alpha = 0.9f),
+                                    style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp)
+                                )
 
-                    // add more items below if needed to allow scrolling
-                    items(10) { index ->
-                        Spacer(modifier = Modifier.height(8.dp))
+                                Spacer(modifier = Modifier.height(6.dp))
+
+                                Text(
+                                    text = "j°C",
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.displayLarge.copy(
+                                        fontSize = 96.sp,
+                                        fontWeight = FontWeight.ExtraBold,
+                                        lineHeight = 96.sp
+                                    )
+                                )
+                            }
+
+                            // panda illustration (replace R.drawable.ic_panda)
+                            Image(
+                                painter = painterResource(id = R.drawable.blue_and_black_bold_typography_quote_poster_3),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(200.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        
                     }
                 }
             }
