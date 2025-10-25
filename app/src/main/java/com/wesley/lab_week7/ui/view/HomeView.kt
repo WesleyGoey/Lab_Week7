@@ -26,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,12 +39,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wesley.lab_week7.R
+import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
 
 @Composable
 fun HomeView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: WeatherViewModel = viewModel(),
 ) {
+    val weather by viewModel.weather.collectAsState()
+    val searchCity by viewModel.searchCity.collectAsState()
+
+    if (weather.isError){
+        ErrorView(
+            searchCity = searchCity,
+            onSearchChange = { viewModel.searchCity(it) },
+            onSearchClick = { viewModel.buttonSearchCity() }
+        )
+    } else{
+        SuccessView(
+            searchCity = searchCity,
+            onSearchChange = { viewModel.searchCity(it) },
+            onSearchClick = { viewModel.buttonSearchCity() }
+        )
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.weather___home_2),
@@ -59,8 +81,10 @@ fun HomeView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = searchCity,
+                    onValueChange = {
+                        viewModel.searchCity(it)
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .height(56.dp),
@@ -87,7 +111,9 @@ fun HomeView(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Button(
-                    onClick = {  },
+                    onClick = {
+                        viewModel.buttonSearchCity()
+                    },
                     modifier = Modifier
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),

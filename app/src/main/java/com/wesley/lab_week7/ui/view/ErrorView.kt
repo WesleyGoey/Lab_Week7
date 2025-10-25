@@ -43,7 +43,10 @@ import com.wesley.lab_week7.R
 
 @Composable
 fun ErrorView(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    searchCity: String,
+    onSearchChange: (String) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -61,8 +64,8 @@ fun ErrorView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextField(
-                    value = "",
-                    onValueChange = {},
+                    value = searchCity,
+                    onValueChange = onSearchChange,
                     modifier = Modifier
                         .weight(1f)
                         .height(56.dp),
@@ -89,7 +92,7 @@ fun ErrorView(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Button(
-                    onClick = {  },
+                    onClick = onSearchClick,
                     modifier = Modifier
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
@@ -135,5 +138,9 @@ fun ErrorView(
 @Preview
 @Composable
 private fun ErrorPreview() {
-    ErrorView()
+    ErrorView(
+        searchCity = "",
+        onSearchChange = {},
+        onSearchClick = {}
+    )
 }

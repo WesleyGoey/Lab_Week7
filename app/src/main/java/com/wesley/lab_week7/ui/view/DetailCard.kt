@@ -30,7 +30,7 @@ fun DetailCard(
     modifier: Modifier = Modifier,
     icon: Int,
     description: String,
-    value: Int
+    value: String
 ) {
     Card(
         modifier = modifier
@@ -66,7 +66,7 @@ fun DetailCard(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                text = "49%",
+                text = value,
                 color = Color.White,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
@@ -82,6 +82,6 @@ private fun DetailCardPreview() {
     DetailCard(
         icon = R.drawable.icon_humidity,
         description = "HUMIDITY",
-        value = 49
+        value = "49%"
     )
 }
