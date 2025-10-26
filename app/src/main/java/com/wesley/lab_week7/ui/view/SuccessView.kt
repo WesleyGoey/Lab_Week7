@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wesley.lab_week7.R
 import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
+import kotlin.math.roundToInt
 
 @Composable
 fun SuccessView(
@@ -52,14 +53,14 @@ fun SuccessView(
 ) {
     val weather by viewModel.weather.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
-    val sampleCards = listOf(
-        Triple(R.drawable.icon_humidity, "HUMIDITY", "49%"),
-        Triple(R.drawable.icon_wind, "WIND", "6 km/h"),
-        Triple(R.drawable.icon_feels_like, "FEELS LIKE", "22°C"),
-        Triple(R.drawable.vector_2, "PRESSURE", "1012 hPa"),
-        Triple(R.drawable.devices, "CLOUDS", "12%"),
-        Triple(R.drawable.cloud, "RAIN", "0 mm")
-    )
+//    val sampleCards = listOf(
+//        Triple(R.drawable.icon_humidity, "HUMIDITY", "49%"),
+//        Triple(R.drawable.icon_wind, "WIND", "6 km/h"),
+//        Triple(R.drawable.icon_feels_like, "FEELS LIKE", "22°C"),
+//        Triple(R.drawable.vector_2, "PRESSURE", "1012 hPa"),
+//        Triple(R.drawable.devices, "CLOUDS", "12%"),
+//        Triple(R.drawable.cloud, "RAIN", "0 mm")
+//    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -143,7 +144,7 @@ fun SuccessView(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "Medan",
+                                text = weather.city,
                                 color = Color.White.copy(alpha = 0.9f),
                                 fontSize = 20.sp,
                                 modifier = Modifier.padding(top = 2.dp)
@@ -152,7 +153,7 @@ fun SuccessView(
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Text(
-                            text = "September 29",
+                            text = "${weather.dateTime}",
                             color = Color.White,
                             fontSize = 40.sp,
                             fontWeight = FontWeight.Bold,
@@ -163,7 +164,7 @@ fun SuccessView(
                         Spacer(modifier = Modifier.height(6.dp))
 
                         Text(
-                            text = "Updated as of 2:53 PM",
+                            text = "${weather.dateTime}",
                             color = Color.White.copy(alpha = 0.75f),
                             fontSize = 13.sp,
                             textAlign = TextAlign.Center,
@@ -189,7 +190,7 @@ fun SuccessView(
                                     modifier = Modifier.size(64.dp)
                                 )
                                 Text(
-                                    text = "condition",
+                                    text = weather.condition,
                                     color = Color.White.copy(alpha = 0.9f),
                                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp)
                                 )
@@ -197,10 +198,10 @@ fun SuccessView(
                                 Spacer(modifier = Modifier.height(6.dp))
 
                                 Text(
-                                    text = "j°C",
+                                    text = "${weather.temperature.roundToInt()}°C",
                                     color = Color.White,
                                     style = MaterialTheme.typography.displayLarge.copy(
-                                        fontSize = 96.sp,
+                                        fontSize = 70.sp,
                                         fontWeight = FontWeight.ExtraBold,
                                         lineHeight = 96.sp
                                     )
@@ -209,7 +210,7 @@ fun SuccessView(
 
                             Image(
                                 painter = painterResource(id = R.drawable.blue_and_black_bold_typography_quote_poster_3),
-                                contentDescription = "weather image",
+                                contentDescription = "Panda image",
                                 modifier = Modifier
                                     .size(200.dp)
                             )
@@ -223,13 +224,15 @@ fun SuccessView(
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             for (i in 0..2) {
-                                val card = sampleCards[i]
-                                DetailCard(
-                                    modifier = Modifier.weight(1f),
-                                    icon = card.first,
-                                    description = card.second,
-                                    value = card.third
-                                )
+                                if (allCard.isNotEmpty()){
+                                    val card = allCard[i]
+                                    DetailCard(
+                                        modifier = Modifier.weight(1f),
+                                        icon = card.first,
+                                        description = card.second,
+                                        value = card.third
+                                    )
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(16.dp))
@@ -240,18 +243,74 @@ fun SuccessView(
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             for (i in 3..5) {
-                                val card = sampleCards[i]
-                                DetailCard(
-                                    modifier = Modifier.weight(1f),
-                                    icon = card.first,
-                                    description = card.second,
-                                    value = card.third
+                                if (allCard.isNotEmpty()){
+                                    val card = allCard[i]
+                                    DetailCard(
+                                        modifier = Modifier.weight(1f),
+                                        icon = card.first,
+                                        description = card.second,
+                                        value = card.third
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(30.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.vector),
+                                    contentDescription = "Sunrise Icon",
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(
+                                    text = "SUNRISE",
+                                    color = Color.White.copy(alpha = 0.6f),
+                                    fontSize = 12.sp
+                                )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(
+                                    text = "${weather.sunrise}",
+                                    color = Color.White,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(80.dp))
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.vector_21png),
+                                    contentDescription = "Sunset Icon",
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(
+                                    text = "SUNSET",
+                                    color = Color.White.copy(alpha = 0.6f),
+                                    fontSize = 12.sp
+                                )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(
+                                    text = "${weather.sunset}",
+                                    color = Color.White,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
-
-                        Spacer(modifier = Modifier.height(40.dp))
-
                     }
                 }
             }

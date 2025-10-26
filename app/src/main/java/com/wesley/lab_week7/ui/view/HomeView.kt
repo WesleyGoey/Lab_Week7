@@ -137,7 +137,7 @@ fun HomeView(
                         tint = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.size(64.dp)
                     )
-                    Spacer(modifier = Modifier.height(14.dp))
+                    Spacer(modifier =  Modifier.height(14.dp))
                     Text(
                         text = "Search for a city to get started",
                         color = Color.White.copy(alpha = 0.85f),
