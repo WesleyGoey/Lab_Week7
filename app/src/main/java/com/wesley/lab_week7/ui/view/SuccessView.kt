@@ -1,7 +1,6 @@
 package com.wesley.lab_week7.ui.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,9 +22,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -34,8 +30,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -56,7 +50,16 @@ fun SuccessView(
     onSearchClick: () -> Unit,
     viewModel: WeatherViewModel = viewModel()
 ) {
+    val weather by viewModel.weather.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
+    val sampleCards = listOf(
+        Triple(R.drawable.icon_humidity, "HUMIDITY", "49%"),
+        Triple(R.drawable.icon_wind, "WIND", "6 km/h"),
+        Triple(R.drawable.icon_feels_like, "FEELS LIKE", "22°C"),
+        Triple(R.drawable.vector_2, "PRESSURE", "1012 hPa"),
+        Triple(R.drawable.devices, "CLOUDS", "12%"),
+        Triple(R.drawable.cloud, "RAIN", "0 mm")
+    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -166,7 +169,7 @@ fun SuccessView(
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth()
                         )
-                        Spacer(modifier = Modifier.height(60.dp))
+                        Spacer(modifier = Modifier.height(70.dp))
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -204,17 +207,51 @@ fun SuccessView(
                                 )
                             }
 
-                            // panda illustration (replace R.drawable.ic_panda)
                             Image(
                                 painter = painterResource(id = R.drawable.blue_and_black_bold_typography_quote_poster_3),
-                                contentDescription = null,
+                                contentDescription = "weather image",
                                 modifier = Modifier
                                     .size(200.dp)
                             )
                         }
+                        Spacer(modifier = Modifier.height(70.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            for (i in 0..2) {
+                                val card = sampleCards[i]
+                                DetailCard(
+                                    modifier = Modifier.weight(1f),
+                                    icon = card.first,
+                                    description = card.second,
+                                    value = card.third
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            for (i in 3..5) {
+                                val card = sampleCards[i]
+                                DetailCard(
+                                    modifier = Modifier.weight(1f),
+                                    icon = card.first,
+                                    description = card.second,
+                                    value = card.third
+                                )
+                            }
+                        }
+
                         Spacer(modifier = Modifier.height(40.dp))
 
-                        
                     }
                 }
             }

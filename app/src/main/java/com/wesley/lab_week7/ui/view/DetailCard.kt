@@ -34,41 +34,41 @@ fun DetailCard(
 ) {
     Card(
         modifier = modifier
-            .size(width = 160.dp, height = 180.dp)
-            .clip(RoundedCornerShape(28.dp)),
-        shape = RoundedCornerShape(28.dp),
-        elevation = CardDefaults.cardElevation(10.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.LightGray)
+            .size(width = 100.dp, height = 130.dp)
+            .clip(RoundedCornerShape(21.dp)),
+        shape = RoundedCornerShape(21.dp),
+        elevation = CardDefaults.cardElevation(7.5.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF586070))
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(12.dp)
         ) {
             Image(
                 painter = painterResource(icon),
                 contentDescription = "humidity",
-                modifier = Modifier.size(52.dp)
+                modifier = Modifier.size(36.dp)
             )
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = description,
-                color = Color.White.copy(alpha = 0.85f),
-                fontSize = 16.sp,
+                color = Color.White.copy(alpha = 0.6f),
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Medium,
                 letterSpacing = 1.2.sp
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = value,
                 color = Color.White,
-                fontSize = 30.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
         }
