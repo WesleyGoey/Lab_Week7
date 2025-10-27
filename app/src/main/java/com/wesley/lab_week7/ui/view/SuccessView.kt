@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.wesley.lab_week7.R
 import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
 import kotlin.math.roundToInt
@@ -180,11 +181,12 @@ fun SuccessView(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.icon_wind),
-                                    contentDescription = "weather icon",
-                                    tint = Color.White,
-                                    modifier = modifier.size(64.dp)
+                                Image(
+                                    painter = rememberAsyncImagePainter(
+                                        model = "https://openweathermap.org/img/wn/${weather.icon}.png"
+                                    ),
+                                    contentDescription = "Weather Icon",
+                                    modifier = modifier.size(100.dp)
                                 )
                                 Text(
                                     text = weather.condition,
