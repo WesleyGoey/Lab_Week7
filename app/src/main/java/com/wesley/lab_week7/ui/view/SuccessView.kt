@@ -53,14 +53,6 @@ fun SuccessView(
 ) {
     val weather by viewModel.weather.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
-//    val sampleCards = listOf(
-//        Triple(R.drawable.icon_humidity, "HUMIDITY", "49%"),
-//        Triple(R.drawable.icon_wind, "WIND", "6 km/h"),
-//        Triple(R.drawable.icon_feels_like, "FEELS LIKE", "22°C"),
-//        Triple(R.drawable.vector_2, "PRESSURE", "1012 hPa"),
-//        Triple(R.drawable.devices, "CLOUDS", "12%"),
-//        Triple(R.drawable.cloud, "RAIN", "0 mm")
-//    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -103,7 +95,8 @@ fun SuccessView(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
+                        unfocusedTextColor = Color.White,
+                        cursorColor = Color.White
                     )
                 )
 

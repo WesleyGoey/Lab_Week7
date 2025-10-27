@@ -51,98 +51,103 @@ fun HomeView(
     val weather by viewModel.weather.collectAsState()
     val searchCity by viewModel.searchCity.collectAsState()
 
-    if (weather.isError){
-        ErrorView(
-            searchCity = searchCity,
-            onSearchChange = { viewModel.searchCity(it) },
-            onSearchClick = { viewModel.buttonSearchCity() }
-        )
-    } else{
-        SuccessView(
-            searchCity = searchCity,
-            onSearchChange = { viewModel.searchCity(it) },
-            onSearchClick = { viewModel.buttonSearchCity() }
-        )
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.weather___home_2),
-            contentDescription = "sky background",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-        )
-
-        Column(modifier = Modifier.fillMaxSize()) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextField(
-                    value = searchCity,
-                    onValueChange = {
-                        viewModel.searchCity(it)
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp),
-                    placeholder = { Text(text = "Enter city name...", color = Color.White.copy(alpha = 0.7f)) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search Icon",
-                            tint = Color.White.copy(alpha = 0.8f)
-                        )
-                    },
-                    singleLine = true,
-                    shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.White.copy(alpha = 0.12f),
-                        unfocusedContainerColor = Color.White.copy(alpha = 0.12f),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
-                    )
+    when {
+        weather.isError -> {
+            ErrorView(
+                searchCity = searchCity,
+                onSearchChange = { viewModel.searchCity(it) },
+                onSearchClick = { viewModel.buttonSearchCity() }
+            )
+        }
+        weather.city.isNotBlank() -> {
+            SuccessView(
+                searchCity = searchCity,
+                onSearchChange = { viewModel.searchCity(it) },
+                onSearchClick = { viewModel.buttonSearchCity() }
+            )
+        }
+        else -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.weather___home_2),
+                    contentDescription = "sky background",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        TextField(
+                            value = searchCity,
+                            onValueChange = { viewModel.searchCity(it) },
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(56.dp),
+                            placeholder = {
+                                Text(
+                                    text = "Enter city name...",
+                                    color = Color.White.copy(alpha = 0.7f)
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search Icon",
+                                    tint = Color.White.copy(alpha = 0.8f)
+                                )
+                            },
+                            singleLine = true,
+                            shape = RoundedCornerShape(16.dp),
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color.White.copy(alpha = 0.12f),
+                                unfocusedContainerColor = Color.White.copy(alpha = 0.12f),
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                cursorColor = Color.White
+                            )
+                        )
 
-                Button(
-                    onClick = {
-                        viewModel.buttonSearchCity()
-                    },
-                    modifier = Modifier
-                        .height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.12f))
-                ) {
-                    Icon(Icons.Default.Search, contentDescription = null, tint = Color.White)
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "Search", color = Color.White)
-                }
-            }
+                        Spacer(modifier = Modifier.width(8.dp))
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color.White.copy(alpha = 0.7f),
-                        modifier = Modifier.size(64.dp)
-                    )
-                    Spacer(modifier =  Modifier.height(14.dp))
-                    Text(
-                        text = "Search for a city to get started",
-                        color = Color.White.copy(alpha = 0.85f),
-                        fontSize = 16.sp
-                    )
+                        Button(
+                            onClick = { viewModel.buttonSearchCity() },
+                            modifier = Modifier.height(56.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.White.copy(alpha = 0.12f)
+                            )
+                        ) {
+                            Icon(Icons.Default.Search, contentDescription = null, tint = Color.White)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = "Search", color = Color.White)
+                        }
+                    }
+
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search Icon",
+                                tint = Color.White.copy(alpha = 0.7f),
+                                modifier = Modifier.size(64.dp)
+                            )
+                            Spacer(modifier = Modifier.height(14.dp))
+                            Text(
+                                text = "Search for a city to get started",
+                                color = Color.White.copy(alpha = 0.85f)
+                            )
+                        }
+                    }
                 }
             }
         }

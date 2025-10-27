@@ -85,7 +85,8 @@ fun ErrorView(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
+                        unfocusedTextColor = Color.White,
+                        cursorColor = Color.White
                     )
                 )
 
