@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
@@ -28,6 +29,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.wesley.lab_week7.R
 import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
@@ -62,12 +65,17 @@ fun SuccessView(
     val sunriseTime by viewModel.sunriseTime.collectAsState()
     val sunsetTime by viewModel.sunsetTime.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     val doSearch = {
         if (searchCity.isEmpty()) {
             viewModel.resetToHome()
         } else {
             viewModel.buttonSearchCity()
+        }
+        coroutineScope.launch {
+            listState.scrollToItem(0)
         }
     }
 
@@ -141,6 +149,7 @@ fun SuccessView(
 
             Box(modifier = modifier.fillMaxSize()) {
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
