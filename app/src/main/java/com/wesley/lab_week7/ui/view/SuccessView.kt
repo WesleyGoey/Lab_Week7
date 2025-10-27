@@ -69,7 +69,7 @@ fun SuccessView(
 
         Column(modifier = modifier.fillMaxSize()) {
             Row(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -77,7 +77,7 @@ fun SuccessView(
                 TextField(
                     value = searchCity,
                     onValueChange = onSearchChange,
-                    modifier = modifier
+                    modifier = Modifier
                         .weight(1f)
                         .height(56.dp),
                     placeholder = {
@@ -122,10 +122,10 @@ fun SuccessView(
 
             Box(modifier = modifier.fillMaxSize()) {
                 LazyColumn(
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top,
+                    verticalArrangement = Arrangement.Center,
                     contentPadding = PaddingValues(vertical = 24.dp)
                 ) {
                     item {
@@ -170,13 +170,13 @@ fun SuccessView(
                         )
                         Spacer(modifier = modifier.height(70.dp))
                         Row(
-                            modifier = modifier
+                            modifier = Modifier
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
-                                modifier = modifier
+                                modifier = Modifier
                                     .weight(1f),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
@@ -218,17 +218,16 @@ fun SuccessView(
                                     }
                                 ),
                                 contentDescription = "Panda image",
-                                modifier = modifier
+                                modifier = Modifier
                                     .size(200.dp)
                             )
                         }
-                        Spacer(modifier = modifier.height(70.dp))
+                        Spacer(modifier = modifier.height(90.dp))
 
                         Row(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             for (i in 0..2) {
                                 if (allCard.isNotEmpty()) {
@@ -244,10 +243,9 @@ fun SuccessView(
                         }
                         Spacer(modifier = modifier.height(16.dp))
                         Row(
-                            modifier = modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             for (i in 3..5) {
                                 if (allCard.isNotEmpty()) {

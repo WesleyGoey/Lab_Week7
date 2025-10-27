@@ -23,8 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wesley.lab_week7.R
-import java.util.concurrent.locks.Condition
-
 @Composable
 fun DetailCard(
     modifier: Modifier = Modifier,
@@ -33,8 +31,8 @@ fun DetailCard(
     value: String
 ) {
     Card(
-        modifier = modifier
-            .size(width = 100.dp, height = 130.dp)
+        modifier = Modifier
+            .size(width = 105.dp, height = 135.dp)
             .clip(RoundedCornerShape(21.dp)),
         shape = RoundedCornerShape(21.dp),
         elevation = CardDefaults.cardElevation(7.5.dp),
@@ -43,32 +41,32 @@ fun DetailCard(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(16.dp)
         ) {
             Image(
                 painter = painterResource(icon),
                 contentDescription = "humidity",
-                modifier = modifier.size(36.dp)
+                modifier = Modifier.size(36.dp)
             )
 
-            Spacer(modifier = modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = description,
                 color = Color.White.copy(alpha = 0.6f),
-                fontSize = 10.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
                 letterSpacing = 1.2.sp
             )
 
-            Spacer(modifier = modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = value,
                 color = Color.White,
-                fontSize = 18.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
         }
