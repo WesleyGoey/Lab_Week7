@@ -27,6 +27,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -84,15 +89,13 @@ fun HomeView(
                             onValueChange = { viewModel.searchCity(it) },
                             modifier = modifier
                                 .weight(1f)
-                                .height(56.dp),
-//                                .onKeyEvent { keyEvent ->
-//                                    if (keyEvent.type == KeyEventType.KeyUp && keyEvent.key == Key.Enter) {
-//                                        viewModel.buttonSearchCity()
-//                                        true
-//                                    } else {
-//                                        false
-//                                    }
-//                                },
+                                .height(56.dp)
+                                .onKeyEvent { keyEvent ->
+                                    if (keyEvent.type == KeyEventType.KeyUp && keyEvent.key == Key.Enter) {
+                                        doSearch()
+                                        true
+                                    } else false
+                                },
                             placeholder = {
                                 Text(
                                     text = "Enter city name...",

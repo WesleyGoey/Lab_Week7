@@ -26,6 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -70,8 +75,19 @@ fun ErrorView(
                     onValueChange = onSearchChange,
                     modifier = modifier
                         .weight(1f)
-                        .height(56.dp),
-                    placeholder = { Text(text = "Enter city name...", color = Color.White.copy(alpha = 0.7f)) },
+                        .height(56.dp)
+                        .onKeyEvent { keyEvent ->
+                            if (keyEvent.type == KeyEventType.KeyUp && keyEvent.key == Key.Enter) {
+                                doSearch()
+                                true
+                            } else false
+                        },
+                    placeholder = {
+                        Text(
+                            text = "Enter city name...",
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                    },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -95,7 +111,7 @@ fun ErrorView(
                 Spacer(modifier = modifier.width(8.dp))
 
                 Button(
-                    onClick = {doSearch()},
+                    onClick = { doSearch() },
                     modifier = modifier
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
