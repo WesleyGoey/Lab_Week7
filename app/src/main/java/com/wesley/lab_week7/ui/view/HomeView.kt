@@ -58,17 +58,17 @@ fun HomeView(
             )
         }
         else -> {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = modifier.fillMaxSize()) {
                 Image(
                     painter = painterResource(id = R.drawable.weather___home_2),
                     contentDescription = "sky background",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = modifier.fillMaxSize()
                 )
 
-                Column(modifier = Modifier.fillMaxSize()) {
+                Column(modifier = modifier.fillMaxSize()) {
                     Row(
-                        modifier = Modifier
+                        modifier = modifier
                             .fillMaxWidth()
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -76,7 +76,7 @@ fun HomeView(
                         TextField(
                             value = searchCity,
                             onValueChange = { viewModel.searchCity(it) },
-                            modifier = Modifier
+                            modifier = modifier
                                 .weight(1f)
                                 .height(56.dp),
                             placeholder = {
@@ -105,34 +105,34 @@ fun HomeView(
                             )
                         )
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = modifier.width(8.dp))
 
                         Button(
                             onClick = { viewModel.buttonSearchCity() },
-                            modifier = Modifier.height(56.dp),
+                            modifier = modifier.height(56.dp),
                             shape = RoundedCornerShape(16.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.White.copy(alpha = 0.12f)
                             )
                         ) {
                             Icon(Icons.Default.Search, contentDescription = null, tint = Color.White)
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Spacer(modifier = modifier.width(4.dp))
                             Text(text = "Search", color = Color.White)
                         }
                     }
 
-                    Box(modifier = Modifier.fillMaxSize()) {
+                    Box(modifier = modifier.fillMaxSize()) {
                         Column(
-                            modifier = Modifier.align(Alignment.Center),
+                            modifier = modifier.align(Alignment.Center),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Search Icon",
                                 tint = Color.White.copy(alpha = 0.7f),
-                                modifier = Modifier.size(64.dp)
+                                modifier = modifier.size(64.dp)
                             )
-                            Spacer(modifier = Modifier.height(14.dp))
+                            Spacer(modifier = modifier.height(14.dp))
                             Text(
                                 text = "Search for a city to get started",
                                 color = Color.White.copy(alpha = 0.85f)

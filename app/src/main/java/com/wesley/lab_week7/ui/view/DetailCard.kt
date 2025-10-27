@@ -43,17 +43,17 @@ fun DetailCard(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(12.dp)
         ) {
             Image(
                 painter = painterResource(icon),
                 contentDescription = "humidity",
-                modifier = Modifier.size(36.dp)
+                modifier = modifier.size(36.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = modifier.height(10.dp))
 
             Text(
                 text = description,
@@ -63,7 +63,7 @@ fun DetailCard(
                 letterSpacing = 1.2.sp
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = modifier.height(10.dp))
 
             Text(
                 text = value,

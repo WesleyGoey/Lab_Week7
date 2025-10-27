@@ -52,19 +52,23 @@ fun SuccessView(
     viewModel: WeatherViewModel = viewModel()
 ) {
     val weather by viewModel.weather.collectAsState()
+    val monthDate by viewModel.monthDate.collectAsState()
+    val timeUpdated by viewModel.timeUpdated.collectAsState()
+    val sunriseTime by viewModel.sunriseTime.collectAsState()
+    val sunsetTime by viewModel.sunsetTime.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.weather___home_2),
             contentDescription = "sky background",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize()
         )
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = modifier.fillMaxSize()) {
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -72,7 +76,7 @@ fun SuccessView(
                 TextField(
                     value = searchCity,
                     onValueChange = onSearchChange,
-                    modifier = Modifier
+                    modifier = modifier
                         .weight(1f)
                         .height(56.dp),
                     placeholder = {
@@ -100,24 +104,24 @@ fun SuccessView(
                     )
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = modifier.width(8.dp))
 
                 Button(
                     onClick = onSearchClick,
-                    modifier = Modifier.height(56.dp),
+                    modifier = modifier.height(56.dp),
                     shape = RoundedCornerShape(16.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.12f))
                 ) {
                     Icon(Icons.Default.Search, contentDescription = null, tint = Color.White)
-                    Spacer(modifier = Modifier.width(4.dp))
+                    Spacer(modifier = modifier.width(4.dp))
                     Text(text = "Search", color = Color.White)
                 }
             }
 
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = modifier.fillMaxSize()) {
                 LazyColumn(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top,
@@ -127,51 +131,51 @@ fun SuccessView(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = modifier.fillMaxWidth()
                         ) {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
                                 contentDescription = "Location Icon",
                                 tint = Color.White,
-                                modifier = Modifier.size(28.dp)
+                                modifier = modifier.size(28.dp)
                             )
-                            Spacer(modifier = Modifier.width(4.dp))
+                            Spacer(modifier = modifier.width(4.dp))
                             Text(
                                 text = weather.city,
                                 color = Color.White.copy(alpha = 0.9f),
                                 fontSize = 20.sp,
-                                modifier = Modifier.padding(top = 2.dp)
+                                modifier = modifier.padding(top = 2.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.height(10.dp))
+                        Spacer(modifier = modifier.height(10.dp))
 
                         Text(
-                            text = "${weather.dateTime}",
+                            text = monthDate,
                             color = Color.White,
                             fontSize = 40.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = modifier.fillMaxWidth()
                         )
 
-                        Spacer(modifier = Modifier.height(6.dp))
+                        Spacer(modifier = modifier.height(6.dp))
 
                         Text(
-                            text = "${weather.dateTime}",
+                            text = timeUpdated,
                             color = Color.White.copy(alpha = 0.75f),
                             fontSize = 13.sp,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = modifier.fillMaxWidth()
                         )
-                        Spacer(modifier = Modifier.height(70.dp))
+                        Spacer(modifier = modifier.height(70.dp))
                         Row(
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column(
-                                modifier = Modifier
+                                modifier = modifier
                                     .weight(1f),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
@@ -180,7 +184,7 @@ fun SuccessView(
                                     painter = painterResource(id = R.drawable.icon_wind),
                                     contentDescription = "weather icon",
                                     tint = Color.White,
-                                    modifier = Modifier.size(64.dp)
+                                    modifier = modifier.size(64.dp)
                                 )
                                 Text(
                                     text = weather.condition,
@@ -188,7 +192,7 @@ fun SuccessView(
                                     style = MaterialTheme.typography.bodyLarge.copy(fontSize = 20.sp)
                                 )
 
-                                Spacer(modifier = Modifier.height(6.dp))
+                                Spacer(modifier = modifier.height(6.dp))
 
                                 Text(
                                     text = "${weather.temperature.roundToInt()}°C",
@@ -202,25 +206,33 @@ fun SuccessView(
                             }
 
                             Image(
-                                painter = painterResource(id = R.drawable.blue_and_black_bold_typography_quote_poster_3),
+                                painter = painterResource(
+                                    id = if (weather.condition == "Clear") {
+                                        R.drawable.blue_and_black_bold_typography_quote_poster_3
+                                    } else if (weather.condition == "Rain") {
+                                        R.drawable.blue_and_black_bold_typography_quote_poster_2
+                                    } else {
+                                        R.drawable.blue_and_black_bold_typography_quote_poster
+                                    }
+                                ),
                                 contentDescription = "Panda image",
-                                modifier = Modifier
+                                modifier = modifier
                                     .size(200.dp)
                             )
                         }
-                        Spacer(modifier = Modifier.height(70.dp))
+                        Spacer(modifier = modifier.height(70.dp))
 
                         Row(
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             for (i in 0..2) {
-                                if (allCard.isNotEmpty()){
+                                if (allCard.isNotEmpty()) {
                                     val card = allCard[i]
                                     DetailCard(
-                                        modifier = Modifier.weight(1f),
+                                        modifier = modifier.weight(1f),
                                         icon = card.first,
                                         description = card.second,
                                         value = card.third
@@ -228,18 +240,18 @@ fun SuccessView(
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = modifier.height(16.dp))
                         Row(
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             for (i in 3..5) {
-                                if (allCard.isNotEmpty()){
+                                if (allCard.isNotEmpty()) {
                                     val card = allCard[i]
                                     DetailCard(
-                                        modifier = Modifier.weight(1f),
+                                        modifier = modifier.weight(1f),
                                         icon = card.first,
                                         description = card.second,
                                         value = card.third
@@ -247,9 +259,9 @@ fun SuccessView(
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(30.dp))
+                        Spacer(modifier = modifier.height(30.dp))
                         Row(
-                            modifier = Modifier
+                            modifier = modifier
                                 .fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically
@@ -261,24 +273,24 @@ fun SuccessView(
                                 Image(
                                     painter = painterResource(id = R.drawable.vector),
                                     contentDescription = "Sunrise Icon",
-                                    modifier = Modifier
+                                    modifier = modifier
                                         .size(20.dp)
                                 )
-                                Spacer(modifier = Modifier.height(5.dp))
+                                Spacer(modifier = modifier.height(5.dp))
                                 Text(
                                     text = "SUNRISE",
                                     color = Color.White.copy(alpha = 0.6f),
                                     fontSize = 12.sp
                                 )
-                                Spacer(modifier = Modifier.height(5.dp))
+                                Spacer(modifier = modifier.height(5.dp))
                                 Text(
-                                    text = "${weather.sunrise}",
+                                    text = sunriseTime,
                                     color = Color.White,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
-                            Spacer(modifier = Modifier.width(80.dp))
+                            Spacer(modifier = modifier.width(80.dp))
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.Center
@@ -286,18 +298,18 @@ fun SuccessView(
                                 Image(
                                     painter = painterResource(id = R.drawable.vector_21png),
                                     contentDescription = "Sunset Icon",
-                                    modifier = Modifier
+                                    modifier = modifier
                                         .size(20.dp)
                                 )
-                                Spacer(modifier = Modifier.height(5.dp))
+                                Spacer(modifier = modifier.height(5.dp))
                                 Text(
                                     text = "SUNSET",
                                     color = Color.White.copy(alpha = 0.6f),
                                     fontSize = 12.sp
                                 )
-                                Spacer(modifier = Modifier.height(5.dp))
+                                Spacer(modifier = modifier.height(5.dp))
                                 Text(
-                                    text = "${weather.sunset}",
+                                    text = sunsetTime,
                                     color = Color.White,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold

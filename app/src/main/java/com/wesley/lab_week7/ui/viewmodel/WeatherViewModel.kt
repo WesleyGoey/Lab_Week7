@@ -6,9 +6,15 @@ import com.wesley.lab_week7.R
 import com.wesley.lab_week7.data.container.WeatherContainer
 import com.wesley.lab_week7.ui.model.PanPanWeather
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WeatherViewModel : ViewModel() {
     private val _searchCity = MutableStateFlow("")
@@ -17,11 +23,27 @@ class WeatherViewModel : ViewModel() {
     private val _weather = MutableStateFlow(PanPanWeather())
     val weather: StateFlow<PanPanWeather> = _weather.asStateFlow()
 
+    val monthDate = weather.map {
+        val date = Date(it.dateTime * 1000L)
+        SimpleDateFormat("MMMM dd", Locale("id")).format(date)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
+    val timeUpdated = weather.map {
+        val time = Date(it.dateTime * 1000L)
+        SimpleDateFormat("HH:mm a", Locale("id")).format(time)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
+    val sunriseTime = weather.map {
+        val sunrise = Date(it.sunrise * 1000L)
+        SimpleDateFormat("HH:mm a", Locale("id")).format(sunrise)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, "")
+
+    val sunsetTime = weather.map {
+        val sunset = Date(it.sunrise * 1000L)
+        SimpleDateFormat("HH:mm a", Locale("id")).format(sunset)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, "")
     private val _allCard = MutableStateFlow<List<Triple<Int, String, String>>>(emptyList())
     val allCard: StateFlow<List<Triple<Int, String, String>>> = _allCard.asStateFlow()
-
-    
-
     fun searchCity(cityName: String) {
         _searchCity.value = cityName
     }
@@ -34,8 +56,7 @@ class WeatherViewModel : ViewModel() {
     fun loadWeather(cityName: String) {
         if (cityName.isBlank()) {
             _weather.value = _weather.value.copy(
-                isError = true,
-                errorMessage = "HTTP 404 Not Found"
+                isError = true, errorMessage = "HTTP 404 Not Found"
             )
             _allCard.value = emptyList()
             return
@@ -45,14 +66,12 @@ class WeatherViewModel : ViewModel() {
             try {
                 val weatherData = WeatherContainer().weatherRepository.getWeatherByCity(cityName)
                 _weather.value = weatherData.copy(
-                    isError = false,
-                    errorMessage = null
+                    isError = false, errorMessage = null
                 )
                 loadAllCard()
             } catch (e: Exception) {
                 _weather.value = _weather.value.copy(
-                    isError = true,
-                    errorMessage = "HTTP 404 Not Found"
+                    isError = true, errorMessage = "HTTP 404 Not Found"
                 )
             }
         }
