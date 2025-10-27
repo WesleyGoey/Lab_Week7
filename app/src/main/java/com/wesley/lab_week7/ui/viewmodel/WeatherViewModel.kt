@@ -20,6 +20,8 @@ class WeatherViewModel : ViewModel() {
     private val _allCard = MutableStateFlow<List<Triple<Int, String, String>>>(emptyList())
     val allCard: StateFlow<List<Triple<Int, String, String>>> = _allCard.asStateFlow()
 
+    
+
     fun searchCity(cityName: String) {
         _searchCity.value = cityName
     }
