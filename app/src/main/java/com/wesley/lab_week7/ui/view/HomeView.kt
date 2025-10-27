@@ -3,6 +3,7 @@ package com.wesley.lab_week7.ui.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,17 +48,22 @@ fun HomeView(
             ErrorView(
                 searchCity = searchCity,
                 onSearchChange = { viewModel.searchCity(it) },
-                onSearchClick = { viewModel.buttonSearchCity() }
             )
         }
         weather.city.isNotBlank() -> {
             SuccessView(
                 searchCity = searchCity,
                 onSearchChange = { viewModel.searchCity(it) },
-                onSearchClick = { viewModel.buttonSearchCity() }
             )
         }
         else -> {
+            val doSearch = {
+                if (searchCity.isEmpty()) {
+                    viewModel.resetToHome()
+                } else {
+                    viewModel.buttonSearchCity()
+                }
+            }
             Box(modifier = modifier.fillMaxSize()) {
                 Image(
                     painter = painterResource(id = R.drawable.weather___home_2),
@@ -79,6 +85,14 @@ fun HomeView(
                             modifier = modifier
                                 .weight(1f)
                                 .height(56.dp),
+//                                .onKeyEvent { keyEvent ->
+//                                    if (keyEvent.type == KeyEventType.KeyUp && keyEvent.key == Key.Enter) {
+//                                        viewModel.buttonSearchCity()
+//                                        true
+//                                    } else {
+//                                        false
+//                                    }
+//                                },
                             placeholder = {
                                 Text(
                                     text = "Enter city name...",
@@ -108,9 +122,10 @@ fun HomeView(
                         Spacer(modifier = modifier.width(8.dp))
 
                         Button(
-                            onClick = { viewModel.buttonSearchCity() },
+                            onClick = { doSearch() },
                             modifier = modifier.height(56.dp),
                             shape = RoundedCornerShape(16.dp),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.White.copy(alpha = 0.12f)
                             )

@@ -32,15 +32,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.wesley.lab_week7.R
+import com.wesley.lab_week7.ui.viewmodel.WeatherViewModel
 
 @Composable
 fun ErrorView(
     modifier: Modifier = Modifier,
     searchCity: String,
     onSearchChange: (String) -> Unit,
-    onSearchClick: () -> Unit
+    viewModel: WeatherViewModel = viewModel()
 ) {
+    val doSearch = {
+        if (searchCity.isEmpty()) {
+            viewModel.resetToHome()
+        } else {
+            viewModel.buttonSearchCity()
+        }
+    }
     Box(modifier = modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.weather___home_2),
@@ -86,7 +95,7 @@ fun ErrorView(
                 Spacer(modifier = modifier.width(8.dp))
 
                 Button(
-                    onClick = onSearchClick,
+                    onClick = {doSearch()},
                     modifier = modifier
                         .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
@@ -134,7 +143,6 @@ fun ErrorView(
 private fun ErrorPreview() {
     ErrorView(
         searchCity = "",
-        onSearchChange = {},
-        onSearchClick = {}
+        onSearchChange = {}
     )
 }

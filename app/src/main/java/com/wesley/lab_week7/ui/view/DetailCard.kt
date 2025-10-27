@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.wesley.lab_week7.R
 @Composable
 fun DetailCard(
-    modifier: Modifier = Modifier,
     icon: Int,
     description: String,
     value: String

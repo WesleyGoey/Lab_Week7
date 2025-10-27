@@ -49,7 +49,6 @@ fun SuccessView(
     modifier: Modifier = Modifier,
     searchCity: String,
     onSearchChange: (String) -> Unit,
-    onSearchClick: () -> Unit,
     viewModel: WeatherViewModel = viewModel()
 ) {
     val weather by viewModel.weather.collectAsState()
@@ -58,6 +57,14 @@ fun SuccessView(
     val sunriseTime by viewModel.sunriseTime.collectAsState()
     val sunsetTime by viewModel.sunsetTime.collectAsState()
     val allCard by viewModel.allCard.collectAsState()
+
+    val doSearch = {
+        if (searchCity.isEmpty()) {
+            viewModel.resetToHome()
+        } else {
+            viewModel.buttonSearchCity()
+        }
+    }
 
     Box(modifier = modifier.fillMaxSize()) {
         Image(
@@ -108,7 +115,7 @@ fun SuccessView(
                 Spacer(modifier = modifier.width(8.dp))
 
                 Button(
-                    onClick = onSearchClick,
+                    onClick = { doSearch() },
                     modifier = modifier.height(56.dp),
                     shape = RoundedCornerShape(16.dp),
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
@@ -209,12 +216,18 @@ fun SuccessView(
 
                             Image(
                                 painter = painterResource(
-                                    id = if (weather.condition == "Clear") {
-                                        R.drawable.blue_and_black_bold_typography_quote_poster_3
-                                    } else if (weather.condition == "Rain") {
-                                        R.drawable.blue_and_black_bold_typography_quote_poster_2
-                                    } else {
-                                        R.drawable.blue_and_black_bold_typography_quote_poster
+                                    id = when (weather.condition) {
+                                        "Clear" -> {
+                                            R.drawable.blue_and_black_bold_typography_quote_poster_3
+                                        }
+
+                                        "Rain" -> {
+                                            R.drawable.blue_and_black_bold_typography_quote_poster_2
+                                        }
+
+                                        else -> {
+                                            R.drawable.blue_and_black_bold_typography_quote_poster
+                                        }
                                     }
                                 ),
                                 contentDescription = "Panda image",
@@ -233,7 +246,6 @@ fun SuccessView(
                                 if (allCard.isNotEmpty()) {
                                     val card = allCard[i]
                                     DetailCard(
-                                        modifier = modifier.weight(1f),
                                         icon = card.first,
                                         description = card.second,
                                         value = card.third
@@ -251,7 +263,6 @@ fun SuccessView(
                                 if (allCard.isNotEmpty()) {
                                     val card = allCard[i]
                                     DetailCard(
-                                        modifier = modifier.weight(1f),
                                         icon = card.first,
                                         description = card.second,
                                         value = card.third
@@ -326,5 +337,5 @@ fun SuccessView(
 @Preview
 @Composable
 private fun SuccessPreview() {
-    SuccessView(searchCity = "", onSearchChange = {}, onSearchClick = {})
+    SuccessView(searchCity = "", onSearchChange = {})
 }

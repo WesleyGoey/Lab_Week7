@@ -89,4 +89,9 @@ class WeatherViewModel : ViewModel() {
         )
         _allCard.value = cardList
     }
+
+    fun resetToHome() {
+        searchCity("")
+        _weather.value = PanPanWeather()
+    }
 }
