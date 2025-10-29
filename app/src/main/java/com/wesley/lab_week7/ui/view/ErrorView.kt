@@ -64,6 +64,7 @@ fun ErrorView(
         )
 
         Column(modifier = modifier.fillMaxSize()) {
+            Spacer(modifier = modifier.height(24.dp))
             Row(
                 modifier = modifier
                     .fillMaxWidth()

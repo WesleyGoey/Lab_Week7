@@ -88,6 +88,7 @@ fun SuccessView(
         )
 
         Column(modifier = modifier.fillMaxSize()) {
+            Spacer(modifier = modifier.height(24.dp))
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -228,7 +229,7 @@ fun SuccessView(
                                     text = "${weather.temperature.roundToInt()}°C",
                                     color = Color.White,
                                     style = MaterialTheme.typography.displayLarge.copy(
-                                        fontSize = 70.sp,
+                                        fontSize = 60.sp,
                                         fontWeight = FontWeight.ExtraBold,
                                         lineHeight = 96.sp
                                     )
