@@ -190,7 +190,7 @@ fun SuccessView(
                         Spacer(modifier = modifier.height(6.dp))
 
                         Text(
-                            text = timeUpdated,
+                            text = "Updated as of $timeUpdated",
                             color = Color.White.copy(alpha = 0.75f),
                             fontSize = 13.sp,
                             textAlign = TextAlign.Center,
