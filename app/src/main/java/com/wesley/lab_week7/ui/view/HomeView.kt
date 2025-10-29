@@ -69,15 +69,15 @@ fun HomeView(
                     viewModel.buttonSearchCity()
                 }
             }
-            Box(modifier = modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 Image(
                     painter = painterResource(id = R.drawable.weather___home_2),
                     contentDescription = "sky background",
                     contentScale = ContentScale.Crop,
-                    modifier = modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 )
 
-                Column(modifier = modifier.fillMaxSize()) {
+                Column(modifier = Modifier.fillMaxSize()) {
                     Row(
                         modifier = modifier
                             .fillMaxWidth()
@@ -122,11 +122,11 @@ fun HomeView(
                             )
                         )
 
-                        Spacer(modifier = modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
 
                         Button(
                             onClick = { doSearch() },
-                            modifier = modifier.height(56.dp),
+                            modifier = Modifier.height(56.dp),
                             shape = RoundedCornerShape(16.dp),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                             colors = ButtonDefaults.buttonColors(
@@ -134,23 +134,23 @@ fun HomeView(
                             )
                         ) {
                             Icon(Icons.Default.Search, contentDescription = null, tint = Color.White)
-                            Spacer(modifier = modifier.width(4.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
                             Text(text = "Search", color = Color.White)
                         }
                     }
 
-                    Box(modifier = modifier.fillMaxSize()) {
+                    Box(modifier = Modifier.fillMaxSize()) {
                         Column(
-                            modifier = modifier.align(Alignment.Center),
+                            modifier = Modifier.align(Alignment.Center),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Search,
                                 contentDescription = "Search Icon",
                                 tint = Color.White.copy(alpha = 0.7f),
-                                modifier = modifier.size(64.dp)
+                                modifier = Modifier.size(64.dp)
                             )
-                            Spacer(modifier = modifier.height(14.dp))
+                            Spacer(modifier = Modifier.height(14.dp))
                             Text(
                                 text = "Search for a city to get started",
                                 color = Color.White.copy(alpha = 0.85f)

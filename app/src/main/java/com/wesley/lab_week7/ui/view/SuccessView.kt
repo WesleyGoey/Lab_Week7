@@ -89,7 +89,7 @@ fun SuccessView(
 
         Column(modifier = modifier.fillMaxSize()) {
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
