@@ -65,7 +65,7 @@ fun DetailCard(
             Text(
                 text = value,
                 color = Color.White,
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
         }
