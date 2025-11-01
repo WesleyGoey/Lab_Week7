@@ -23,6 +23,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,6 +50,7 @@ fun ErrorView(
     onSearchChange: (String) -> Unit,
     viewModel: WeatherViewModel = viewModel()
 ) {
+    val weather by viewModel.weather.collectAsState()
     val doSearch = {
         if (searchCity.isEmpty()) {
             viewModel.resetToHome()
@@ -145,7 +148,7 @@ fun ErrorView(
                     )
                     Spacer(modifier = modifier.height(14.dp))
                     Text(
-                        text = "HTTP",
+                        text = "${weather.errorMessage}",
                         color = Color.White.copy(alpha = 0.85f),
                         fontSize = 16.sp
                     )
